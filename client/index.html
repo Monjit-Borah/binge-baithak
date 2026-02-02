@@ -1,0 +1,668 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Binge Baithak - Netflix Style</title>
+    <style>
+        /* Netflix-inspired Bi CSS - Lobby Page */
+        :root {
+            --netflix-red: #e50914;
+            --netflix-dark: #141414;
+            --netflix-darker: #0c0c0c;
+            --netflix-gray: #2d2d2d;
+            --netflix-light-gray: #757575;
+            --netflix-white: #f5f5f5;
+            --accent-blue: #00a8ff;
+            --accent-purple: #9c27b0;
+            --shadow-color: rgba(0, 0, 0, 0.7);
+            --gradient-dark: linear-gradient(135deg, #0c0c0c 0%, #1a1a1a 100%);
+            --gradient-red: linear-gradient(135deg, #e50914 0%, #b20710 100%);
+            --gradient-blue: linear-gradient(135deg, #00a8ff 0%, #0097e6 100%);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Netflix Sans', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+        }
+
+        body {
+            background-color: var(--netflix-darker);
+            color: var(--netflix-white);
+            min-height: 100vh;
+            position: relative;
+            overflow-x: hidden;
+        }
+
+        /* Netflix-style background with overlay */
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: 
+                linear-gradient(to bottom, rgba(20, 20, 20, 0.9) 0%, rgba(20, 20, 20, 0.7) 100%),
+                url('./images/background.jpg');
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            z-index: -2;
+        }
+
+        /* Animated gradient overlay */
+        body::after {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(45deg, 
+                rgba(229, 9, 20, 0.1) 0%, 
+                rgba(0, 168, 255, 0.1) 50%, 
+                rgba(156, 39, 176, 0.1) 100%);
+            z-index: -1;
+            animation: gradientShift 15s ease infinite;
+        }
+
+        @keyframes gradientShift {
+            0%, 100% { opacity: 0.3; }
+            50% { opacity: 0.6; }
+        }
+
+        /* Floating particles animation */
+        .particles {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: -1;
+        }
+
+        .particle {
+            position: absolute;
+            background: rgba(229, 9, 20, 0.3);
+            border-radius: 50%;
+            animation: float 20s infinite linear;
+        }
+
+        @keyframes float {
+            0% {
+                transform: translateY(100vh) translateX(0) rotate(0deg);
+                opacity: 0;
+            }
+            10% {
+                opacity: 0.7;
+            }
+            90% {
+                opacity: 0.7;
+            }
+            100% {
+                transform: translateY(-100px) translateX(100px) rotate(360deg);
+                opacity: 0;
+            }
+        }
+
+        /* Container */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            animation: fadeIn 1.2s ease-out;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        /* Netflix-style header */
+        header {
+            padding: 40px 0 20px;
+            text-align: center;
+            position: relative;
+        }
+
+        header::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 200px;
+            height: 4px;
+            background: var(--gradient-red);
+            border-radius: 2px;
+        }
+
+        h1 {
+            font-size: 4rem;
+            font-weight: 900;
+            margin-bottom: 10px;
+            background: linear-gradient(90deg, var(--netflix-red) 0%, var(--accent-blue) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            text-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+            letter-spacing: 1px;
+        }
+
+        header p {
+            font-size: 1.3rem;
+            color: #b3b3b3;
+            margin-top: 10px;
+            letter-spacing: 0.5px;
+        }
+
+        /* Main content */
+        main {
+            flex: 1;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 40px 20px;
+            padding-bottom: 0px;
+        }
+
+        /* Netflix-style card */
+        .card {
+            background: rgba(20, 20, 20, 0.85);
+            backdrop-filter: blur(15px);
+            border-radius: 16px;
+            padding: 50px 40px;
+            width: 100%;
+            max-width: 500px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            position: relative;
+            overflow: hidden;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 25px 70px rgba(229, 9, 20, 0.3);
+        }
+
+        .card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 4px;
+            background: var(--gradient-red);
+        }
+
+        .card h2 {
+            font-size: 2.2rem;
+            margin-bottom: 30px;
+            text-align: center;
+            color: var(--netflix-white);
+            font-weight: 600;
+        }
+
+        /* Form styles */
+        .form-group {
+            margin-bottom: 25px;
+            animation: slideUp 0.5s ease-out;
+            animation-fill-mode: both;
+        }
+
+        .form-group:nth-child(1) {
+            animation-delay: 0.1s;
+        }
+
+        .form-group:nth-child(2) {
+            animation-delay: 0.2s;
+        }
+
+        @keyframes slideUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        label {
+            display: block;
+            margin-bottom: 10px;
+            font-weight: 600;
+            color: #b3b3b3;
+            font-size: 0.95rem;
+            letter-spacing: 0.5px;
+        }
+
+        input[type="text"] {
+            width: 100%;
+            padding: 18px 20px;
+            background: rgba(45, 45, 45, 0.7);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+            color: var(--netflix-white);
+            font-size: 1rem;
+            transition: all 0.3s ease;
+            backdrop-filter: blur(5px);
+        }
+
+        input[type="text"]:focus {
+            outline: none;
+            border-color: var(--netflix-red);
+            box-shadow: 0 0 0 2px rgba(229, 9, 20, 0.2);
+            background: rgba(65, 65, 65, 0.7);
+        }
+
+        input[type="text"]::placeholder {
+            color: #757575;
+        }
+
+        /* Button styles */
+        .btn {
+            width: 100%;
+            padding: 18px;
+            border: none;
+            border-radius: 10px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-bottom: 20px;
+            position: relative;
+            overflow: hidden;
+            letter-spacing: 0.5px;
+        }
+
+        .btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+            transition: all 0.6s;
+        }
+
+        .btn:hover::before {
+            left: 100%;
+        }
+
+        .btn-primary {
+            background: var(--gradient-red);
+            color: white;
+            animation: slideUp 0.5s ease-out 0.3s both;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 25px rgba(229, 9, 20, 0.4);
+        }
+
+        .btn-secondary {
+            background: rgba(45, 45, 45, 0.7);
+            color: var(--netflix-white);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            animation: slideUp 0.5s ease-out 0.4s both;
+        }
+
+        .btn-secondary:hover {
+            background: rgba(65, 65, 65, 0.9);
+            transform: translateY(-3px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+        }
+
+        /* Divider */
+        .divider {
+            display: flex;
+            align-items: center;
+            margin: 30px 0;
+            color: #757575;
+            animation: slideUp 0.5s ease-out 0.35s both;
+        }
+
+        .divider::before,
+        .divider::after {
+            content: '';
+            flex: 1;
+            height: 1px;
+            background: rgba(255, 255, 255, 0.1);
+        }
+
+        .divider span {
+            padding: 0 15px;
+            font-size: 0.9rem;
+            font-weight: 600;
+        }
+
+        /* Error message */
+        .error-message {
+            background: rgba(229, 9, 20, 0.2);
+            border-left: 4px solid var(--netflix-red);
+            padding: 15px;
+            border-radius: 8px;
+            margin-top: 20px;
+            color: #ff6b6b;
+            font-weight: 500;
+            display: none;
+            animation: slideUp 0.5s ease-out;
+        }
+
+        /* Footer */
+        footer {
+            text-align: center;
+            color: #757575;
+            font-size: 0.95rem;
+            letter-spacing: 0.5px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        footer p {
+            max-width: 600px;
+            margin: 0 auto;
+            line-height: 1.6;
+        }
+
+        /* Logo */
+        .netflix-logo {
+            position: absolute;
+            top: 30px;
+            left: 30px;
+            font-size: 2.5rem;
+            font-weight: 900;
+            color: var(--netflix-red);
+            letter-spacing: -2px;
+            z-index: 10;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .container {
+                padding: 15px;
+            }
+            
+            h1 {
+                font-size: 3rem;
+            }
+            
+            header p {
+                font-size: 1.1rem;
+            }
+            
+            .card {
+                padding: 40px 30px;
+            }
+            
+            .card h2 {
+                font-size: 1.8rem;
+            }
+            
+            .btn {
+                padding: 16px;
+                font-size: 1rem;
+            }
+            
+            .netflix-logo {
+                position: relative;
+                top: 0;
+                left: 0;
+                text-align: center;
+                margin-bottom: 20px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            h1 {
+                font-size: 2.5rem;
+            }
+            
+            header p {
+                font-size: 1rem;
+            }
+            
+            .card {
+                padding: 30px 20px;
+            }
+            
+            .card h2 {
+                font-size: 1.6rem;
+            }
+            
+            input[type="text"] {
+                padding: 15px;
+            }
+            
+            .btn {
+                padding: 15px;
+            }
+        }
+
+        /* Loading animation */
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.7; }
+        }
+
+        .loading {
+            animation: pulse 1.5s infinite;
+        }
+
+        /* Focus states for accessibility */
+        button:focus, input:focus {
+            outline: 2px solid var(--accent-blue);
+            outline-offset: 3px;
+        }
+    </style>
+</head>
+<body>
+    <!-- Netflix Logo -->
+    <div class="netflix-logo"><img src="./images/logo.png" alt="Logo" height="80"></div>
+    
+    <!-- Animated particles -->
+    <div class="particles" id="particles"></div>
+    
+    <div class="container lobby">
+        
+        <main>
+            <div class="card">
+                <h2>Join a Binge Baithak</h2>
+                
+                <div class="form-group">
+                    <label for="username">Your Name</label>
+                    <input type="text" id="username" placeholder="Enter your name" maxlength="20">
+                </div>
+                
+                <div class="form-group">
+                    <label for="roomId">Room Code</label>
+                    <input type="text" id="roomId" placeholder="Enter room code (e.g., BINGEBAITHAK123)" maxlength="10">
+                </div>
+                
+                <button id="joinBtn" class="btn btn-primary">Join Room</button>
+                
+                <div class="divider">
+                    <span>OR</span>
+                </div>
+                
+                <button id="createBtn" class="btn btn-secondary">Create New Room</button>
+                
+                <div id="error" class="error-message"></div>
+            </div>
+        </main>
+        
+        <footer>
+            <p>Share the room code with friends to watch together!</p>
+        </footer>
+    </div>
+    
+    <script>
+        // Create animated particles
+        function createParticles() {
+            const particlesContainer = document.getElementById('particles');
+            const particleCount = 30;
+            
+            for (let i = 0; i < particleCount; i++) {
+                const particle = document.createElement('div');
+                particle.classList.add('particle');
+                
+                // Random size between 2-8px
+                const size = Math.random() * 6 + 2;
+                particle.style.width = `${size}px`;
+                particle.style.height = `${size}px`;
+                
+                // Random position
+                particle.style.left = `${Math.random() * 100}vw`;
+                
+                // Random color (red or blue)
+                const colors = [
+                    'rgba(229, 9, 20, 0.4)',
+                    'rgba(0, 168, 255, 0.4)',
+                    'rgba(156, 39, 176, 0.4)'
+                ];
+                particle.style.background = colors[Math.floor(Math.random() * colors.length)];
+                
+                // Random animation duration and delay
+                const duration = Math.random() * 20 + 15;
+                const delay = Math.random() * 5;
+                particle.style.animationDuration = `${duration}s`;
+                particle.style.animationDelay = `${delay}s`;
+                
+                particlesContainer.appendChild(particle);
+            }
+        }
+        
+        // Form validation and room handling
+        document.addEventListener('DOMContentLoaded', function() {
+            // Create particles
+            createParticles();
+            
+            const usernameInput = document.getElementById('username');
+            const roomIdInput = document.getElementById('roomId');
+            const joinBtn = document.getElementById('joinBtn');
+            const createBtn = document.getElementById('createBtn');
+            const errorDiv = document.getElementById('error');
+            
+            // Generate a random room code
+            function generateRoomCode() {
+                const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
+                let code = '';
+                for (let i = 0; i < 8; i++) {
+                    code += chars.charAt(Math.floor(Math.random() * chars.length));
+                }
+                return code;
+            }
+            
+            // Show error message
+            function showError(message) {
+                errorDiv.textContent = message;
+                errorDiv.style.display = 'block';
+                
+                // Hide error after 5 seconds
+                setTimeout(() => {
+                    errorDiv.style.display = 'none';
+                }, 5000);
+            }
+            
+            // Validate form
+            function validateForm() {
+                const username = usernameInput.value.trim();
+                
+                if (!username) {
+                    showError('Please enter your name');
+                    usernameInput.focus();
+                    return false;
+                }
+                
+                if (username.length < 2) {
+                    showError('Name must be at least 2 characters long');
+                    usernameInput.focus();
+                    return false;
+                }
+                
+                return true;
+            }
+            
+            // Join room function
+            function joinRoom() {
+                if (!validateForm()) return;
+                
+                const username = encodeURIComponent(usernameInput.value.trim());
+                const roomId = roomIdInput.value.trim().toUpperCase();
+                
+                if (!roomId) {
+                    showError('Please enter a room code');
+                    roomIdInput.focus();
+                    return;
+                }
+                
+                // Add loading state
+                joinBtn.classList.add('loading');
+                joinBtn.textContent = 'Joining...';
+                
+                // Simulate API call delay
+                setTimeout(() => {
+                    // In a real app, you would check if room exists via API
+                    // For now, we'll redirect
+                    window.location.href = `room.html?room=${roomId}&user=${username}`;
+                }, 800);
+            }
+            
+            // Create room function
+            function createRoom() {
+                if (!validateForm()) return;
+                
+                const username = encodeURIComponent(usernameInput.value.trim());
+                const roomId = generateRoomCode();
+                
+                // Add loading state
+                createBtn.classList.add('loading');
+                createBtn.textContent = 'Creating...';
+                
+                // Simulate API call delay
+                setTimeout(() => {
+                    // Redirect to room with generated code
+                    window.location.href = `room.html?room=${roomId}&user=${username}`;
+                }, 800);
+            }
+            
+            // Event listeners
+            joinBtn.addEventListener('click', joinRoom);
+            createBtn.addEventListener('click', createRoom);
+            
+            // Allow Enter key to submit
+            usernameInput.addEventListener('keypress', function(e) {
+                if (e.key === 'Enter') {
+                    if (roomIdInput.value.trim()) {
+                        joinRoom();
+                    } else {
+                        roomIdInput.focus();
+                    }
+                }
+            });
+            
+            roomIdInput.addEventListener('keypress', function(e) {
+                if (e.key === 'Enter') {
+                    joinRoom();
+                }
+            });
+            
+            // Auto-focus username field
+            usernameInput.focus();
+            
+            // Add a sample room code for demo purposes
+            roomIdInput.placeholder = "Try: BINGEBAITHAK" + Math.floor(100 + Math.random() * 900);
+        });
+    </script>
+</body>
+</html>

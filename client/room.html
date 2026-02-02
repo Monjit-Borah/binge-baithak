@@ -1,0 +1,1304 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Binge Baithak Room</title>
+    <style>
+/* Netflix-inspired Binge Baithak CSS */
+:root {
+    --netflix-red: #e50914;
+    --netflix-dark: #141414;
+    --netflix-gray: #2d2d2d;
+    --netflix-light-gray: #757575;
+    --netflix-white: #f5f5f5;
+    --accent-blue: #00a8ff;
+    --accent-purple: #9c27b0;
+    --shadow-color: rgba(0, 0, 0, 0.7);
+    --gradient-dark: linear-gradient(135deg, #0c0c0c 0%, #1a1a1a 100%);
+    --gradient-red: linear-gradient(135deg, #e50914 0%, #b20710 100%);
+    --gradient-blue: linear-gradient(135deg, #00a8ff 0%, #0097e6 100%);
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Netflix Sans', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    background: var(--netflix-dark);
+    color: var(--netflix-white);
+    overflow-x: hidden;
+    background-image: 
+        radial-gradient(circle at 20% 80%, rgba(229, 9, 20, 0.15) 0%, transparent 40%),
+        radial-gradient(circle at 80% 20%, rgba(0, 168, 255, 0.1) 0%, transparent 40%);
+    min-height: 100vh;
+    position: relative;
+}
+
+/* Animated background elements */
+.background-elements {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -1;
+    pointer-events: none;
+    overflow: hidden;
+}
+
+.background-elements::before {
+    content: '';
+    position: absolute;
+    width: 300px;
+    height: 300px;
+    background: radial-gradient(circle, var(--netflix-red) 0%, transparent 70%);
+    top: 10%;
+    left: 5%;
+    opacity: 0.1;
+    filter: blur(40px);
+    animation: float 20s infinite ease-in-out;
+}
+
+.background-elements::after {
+    content: '';
+    position: absolute;
+    width: 400px;
+    height: 400px;
+    background: radial-gradient(circle, var(--accent-blue) 0%, transparent 70%);
+    bottom: 10%;
+    right: 5%;
+    opacity: 0.1;
+    filter: blur(40px);
+    animation: float 25s infinite ease-in-out reverse;
+}
+
+@keyframes float {
+    0%, 100% { transform: translate(0, 0) rotate(0deg); }
+    33% { transform: translate(30px, -30px) rotate(120deg); }
+    66% { transform: translate(-20px, 20px) rotate(240deg); }
+}
+
+/* Container */
+.container {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 20px;
+    animation: fadeIn 0.8s ease-out;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+/* Header */
+.header {
+    background: rgba(20, 20, 20, 0.85);
+    backdrop-filter: blur(10px);
+    border-radius: 16px;
+    padding: 20px 30px;
+    margin-bottom: 30px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+    position: relative;
+    overflow: hidden;
+    transition: all 0.3s ease;
+}
+
+.header::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 2px;
+    background: var(--gradient-red);
+}
+
+.header:hover {
+    box-shadow: 0 15px 40px rgba(237, 82, 89, 0.02);
+    transform: translateY(-2px);
+}
+
+.room-info {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+
+.room-info h1 {
+    font-size: 28px;
+    font-weight: 700;
+    background: linear-gradient(90deg, white 0%, grey 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+.room-code {
+    background: var(--gradient-red);
+    padding: 12px 24px;
+    border-radius: 8px;
+    font-weight: 700;
+    font-size: 18px;
+    letter-spacing: 1px;
+    box-shadow: 0 4px 15px rgba(229, 9, 20, 0.3);
+    animation: pulse 2s infinite;
+    position: relative;
+    overflow: hidden;
+}
+
+.room-code::after {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -60%;
+    width: 20%;
+    height: 200%;
+    background: rgba(255, 255, 255, 0.3);
+    transform: rotate(30deg);
+    transition: all 0.6s;
+}
+
+.room-code:hover::after {
+    left: 140%;
+}
+
+@keyframes pulse {
+    0%, 100% { box-shadow: 0 4px 15px rgba(229, 9, 20, 0.3); }
+    50% { box-shadow: 0 4px 25px rgba(229, 9, 20, 0.6); }
+}
+
+.user-role {
+    background: var(--gradient-blue);
+    padding: 8px 16px;
+    border-radius: 20px;
+    font-weight: 600;
+    font-size: 14px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+#leaveBtn {
+    background: var(--gradient-red);
+    color: white;
+    border: none;
+    padding: 12px 28px;
+    border-radius: 8px;
+    font-weight: 600;
+    font-size: 16px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+    z-index: 1;
+}
+
+#leaveBtn::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+    transition: all 0.6s;
+    z-index: -1;
+}
+
+#leaveBtn:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 10px 20px rgba(229, 9, 20, 0.4);
+}
+
+#leaveBtn:hover::before {
+    left: 100%;
+}
+
+/* Main Content Grid */
+.main-content {
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    gap: 30px;
+    animation: slideUp 0.8s ease-out 0.2s both;
+}
+
+@keyframes slideUp {
+    from { opacity: 0; transform: translateY(30px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+/* Video Section */
+.video-section {
+    background: rgba(20, 20, 20, 0.7);
+    backdrop-filter: blur(10px);
+    border-radius: 16px;
+    padding: 25px;
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+    transition: all 0.3s ease;
+}
+
+.video-section:hover {
+    box-shadow: 0 15px 40px rgba(0, 0, 0, 0.5);
+}
+
+.video-section h3 {
+    font-size: 22px;
+    margin-bottom: 20px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    color: var(--netflix-white);
+}
+
+/* YouTube Player */
+#player {
+    width: 100%;
+    height: 480px;
+    background: #000;
+    border-radius: 12px;
+    margin-bottom: 20px;
+    overflow: hidden;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+    transition: all 0.3s ease;
+    position: relative;
+}
+
+#player:hover {
+    transform: scale(1.005);
+    box-shadow: 0 15px 40px rgba(0, 0, 0, 0.7);
+}
+
+.video-info {
+    background: rgba(45, 45, 45, 0.7);
+    padding: 15px;
+    border-radius: 10px;
+    margin-top: 10px;
+    backdrop-filter: blur(5px);
+    border: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+#videoTitle {
+    font-weight: 600;
+    margin-bottom: 5px;
+    font-size: 18px;
+    color: var(--netflix-white);
+}
+
+#videoStatus {
+    font-size: 14px;
+    color: var(--accent-blue);
+    font-weight: 500;
+}
+
+/* Controls */
+.controls {
+    display: flex;
+    gap: 15px;
+    margin-top: 20px;
+    flex-wrap: wrap;
+}
+
+.controls input[type="text"] {
+    flex: 1;
+    min-width: 200px;
+    padding: 15px;
+    background: rgba(45, 45, 45, 0.7);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 10px;
+    color: var(--netflix-white);
+    font-size: 15px;
+    transition: all 0.3s ease;
+    backdrop-filter: blur(5px);
+}
+
+.controls input[type="text"]:focus {
+    outline: none;
+    border-color: var(--netflix-red);
+    box-shadow: 0 0 0 2px rgba(229, 9, 20, 0.2);
+}
+
+.controls button {
+    padding: 15px 25px;
+    background: var(--gradient-blue);
+    color: white;
+    border: none;
+    border-radius: 10px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+    min-width: 120px;
+}
+
+.controls button::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+    transition: all 0.6s;
+}
+
+.controls button:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 10px 20px rgba(0, 168, 255, 0.3);
+}
+
+.controls button:hover::before {
+    left: 100%;
+}
+
+.controls button:disabled {
+    background: var(--netflix-gray);
+    cursor: not-allowed;
+    transform: none;
+    box-shadow: none;
+}
+
+.controls button:disabled:hover::before {
+    left: -100%;
+}
+
+.controls input[type="range"] {
+    flex: 1;
+    height: 6px;
+    border-radius: 3px;
+    background: rgba(255, 255, 255, 0.1);
+    outline: none;
+    -webkit-appearance: none;
+    transition: all 0.3s ease;
+}
+
+.controls input[type="range"]::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    background: var(--netflix-red);
+    cursor: pointer;
+    box-shadow: 0 0 10px rgba(229, 9, 20, 0.5);
+    transition: all 0.2s ease;
+}
+
+.controls input[type="range"]::-webkit-slider-thumb:hover {
+    transform: scale(1.2);
+    box-shadow: 0 0 15px rgba(229, 9, 20, 0.8);
+}
+
+#timeDisplay {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 120px;
+    font-weight: 600;
+    background: rgba(0, 0, 0, 0.3);
+    padding: 10px 15px;
+    border-radius: 8px;
+    border: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+/* Chat Section */
+.chat-section {
+    background: rgba(20, 20, 20, 0.7);
+    backdrop-filter: blur(10px);
+    border-radius: 16px;
+    padding: 25px;
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+    display: flex;
+    flex-direction: column;
+    transition: all 0.3s ease;
+}
+
+.chat-section:hover {
+    box-shadow: 0 15px 40px rgba(0, 0, 0, 0.5);
+}
+
+.chat-section h3 {
+    font-size: 22px;
+    margin-bottom: 20px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    color: var(--netflix-white);
+}
+
+/* .chat-section h3::before {
+    content: '💬';
+    font-size: 18px;
+} */
+
+.chat-messages {
+    flex: 1;
+    overflow-y: auto;
+    margin-bottom: 20px;
+    max-height: 400px;
+    padding-right: 10px;
+}
+
+/* Custom scrollbar */
+.chat-messages::-webkit-scrollbar {
+    width: 8px;
+}
+
+.chat-messages::-webkit-scrollbar-track {
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 4px;
+}
+
+.chat-messages::-webkit-scrollbar-thumb {
+    background: var(--netflix-red);
+    border-radius: 4px;
+}
+
+.chat-messages::-webkit-scrollbar-thumb:hover {
+    background: #b20710;
+}
+
+.message {
+    background: rgba(45, 45, 45, 0.7);
+    padding: 15px;
+    margin-bottom: 15px;
+    border-radius: 12px;
+    border-left: 4px solid var(--accent-blue);
+    animation: messageAppear 0.3s ease-out;
+    backdrop-filter: blur(5px);
+    border: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+@keyframes messageAppear {
+    from { opacity: 0; transform: translateX(-10px); }
+    to { opacity: 1; transform: translateX(0); }
+}
+
+.message.system {
+    border-left-color: var(--netflix-red);
+    background: rgba(229, 9, 20, 0.1);
+}
+
+.message .username {
+    font-weight: 700;
+    color: var(--accent-blue);
+    margin-bottom: 5px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.message.system .username {
+    color: var(--netflix-red);
+}
+
+/* .message .username::before {
+    content: '👤';
+    font-size: 14px;
+}
+
+.message.system .username::before {
+    content: '⚙️';
+} */
+
+.message .text {
+    margin: 8px 0;
+    line-height: 1.5;
+}
+
+/* Chat Input */
+.chat-input {
+    display: flex;
+    gap: 15px;
+    margin-top: auto;
+}
+
+.chat-input input {
+    flex: 1;
+    padding: 15px;
+    background: rgba(45, 45, 45, 0.7);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 10px;
+    color: var(--netflix-white);
+    font-size: 15px;
+    transition: all 0.3s ease;
+    backdrop-filter: blur(5px);
+}
+
+.chat-input input:focus {
+    outline: none;
+    border-color: var(--accent-blue);
+    box-shadow: 0 0 0 2px rgba(0, 168, 255, 0.2);
+}
+
+.chat-input button {
+    padding: 15px 25px;
+    background: var(--gradient-blue);
+    color: white;
+    border: none;
+    border-radius: 10px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    min-width: 100px;
+    position: relative;
+    overflow: hidden;
+}
+
+.chat-input button::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+    transition: all 0.6s;
+}
+
+.chat-input button:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 10px 20px rgba(0, 168, 255, 0.3);
+}
+
+.chat-input button:hover::before {
+    left: 100%;
+}
+
+.chat-input button:disabled {
+    background: var(--netflix-gray);
+    cursor: not-allowed;
+    transform: none;
+    box-shadow: none;
+}
+
+/* User List */
+.user-list {
+    margin-top: 25px;
+}
+
+.user-list h4 {
+    font-size: 18px;
+    margin-bottom: 15px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    color: var(--netflix-white);
+}
+
+/* .user-list h4::before {
+    content: '👥';
+    font-size: 16px;
+} */
+
+.user-item {
+    padding: 12px 15px;
+    background: rgba(45, 45, 45, 0.7);
+    margin-bottom: 8px;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    transition: all 0.3s ease;
+    backdrop-filter: blur(5px);
+    border: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.user-item:hover {
+    background: rgba(65, 65, 65, 0.7);
+    transform: translateX(5px);
+}
+
+.user-item.host {
+    border-left: 4px solid var(--netflix-red);
+    background: rgba(229, 9, 20, 0.1);
+}
+
+.user-item.host::before {
+    content: '👑';
+    font-size: 16px;
+}
+
+/* Tip Box */
+.tip-box {
+    margin-top: 20px;
+    padding: 15px;
+    background: rgba(0, 168, 255, 0.1);
+    border-radius: 10px;
+    border-left: 4px solid var(--accent-blue);
+    font-size: 14px;
+    line-height: 1.5;
+}
+
+.tip-box strong {
+    color: var(--accent-blue);
+}
+
+/* Responsive Design */
+@media (max-width: 1200px) {
+    .main-content {
+        grid-template-columns: 1fr;
+        gap: 20px;
+    }
+    
+    #player {
+        height: 400px;
+    }
+}
+
+@media (max-width: 768px) {
+    .container {
+        padding: 15px;
+    }
+    
+    .header {
+        flex-direction: column;
+        gap: 15px;
+        text-align: center;
+        padding: 20px;
+    }
+    
+    .room-info {
+        flex-direction: column;
+        gap: 15px;
+    }
+    
+    .controls {
+        flex-direction: column;
+    }
+    
+    .controls input[type="text"] {
+        min-width: 100%;
+    }
+    
+    .controls button {
+        width: 100%;
+    }
+    
+    .chat-input {
+        flex-direction: column;
+    }
+    
+    #player {
+        height: 300px;
+    }
+    
+    #leaveBtn {
+        width: 100%;
+        max-width: 200px;
+    }
+}
+
+@media (max-width: 480px) {
+    .room-code {
+        padding: 10px 15px;
+        font-size: 16px;
+    }
+    
+    .video-section, .chat-section {
+        padding: 15px;
+    }
+    
+    #player {
+        height: 250px;
+    }
+    
+    .controls button {
+        padding: 12px 15px;
+        min-width: auto;
+    }
+    
+    h1 {
+        font-size: 24px;
+    }
+    
+    h3 {
+        font-size: 20px;
+    }
+}
+
+/* Loading Animation */
+#roomCode:empty::after,
+#userRole:empty::after {
+    content: '...';
+    animation: loading 1.5s infinite;
+}
+
+@keyframes loading {
+    0%, 100% { opacity: 0.3; }
+    50% { opacity: 1; }
+}
+
+/* Focus States */
+button:focus, input:focus {
+    outline: 2px solid var(--accent-blue);
+    outline-offset: 2px;
+}
+
+/* Smooth transitions for interactive elements */
+button, .user-item, .message, .controls input[type="range"] {
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Glow effect for important elements */
+.glow {
+    animation: glow 2s ease-in-out infinite alternate;
+}
+
+@keyframes glow {
+    from { box-shadow: 0 0 10px var(--netflix-red), 0 0 20px var(--netflix-red); }
+    to { box-shadow: 0 0 15px var(--netflix-red), 0 0 30px var(--netflix-red); }
+}
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <div class="room-info">
+                <img src="./images/logo.png" alt="Binge Baithak" height="70px">
+                <div class="room-code" id="roomCode">LOADING...</div>
+                <div class="user-role" id="userRole">Connecting...</div>
+            </div>
+            <button id="leaveBtn" style="background: #e74c3c;">Leave Room</button>
+        </div>
+        
+        <div class="main-content">
+            <div class="video-section">
+                <h3>Video Player</h3>
+                
+                <!-- YouTube Player Container -->
+                <div id="player"></div>
+                
+                <div class="video-info">
+                    <div id="videoTitle">No video loaded</div>
+                    <div id="videoStatus">Ready to play</div>
+                </div>
+                
+                <div class="controls">
+                    <input type="text" id="videoUrl" placeholder="Paste YouTube URL here (e.g., https://youtube.com/watch?v=VIDEO_ID)" style="flex: 1; padding: 10px;">
+                    <button id="loadVideoBtn" disabled>Load Video</button>
+                </div>
+                
+                <div class="controls">
+                    <button id="playBtn" disabled>▶ Play</button>
+                    <button id="pauseBtn" disabled>⏸ Pause</button>
+                    <input type="range" id="seekBar" min="0" max="100" value="0" style="flex: 1;" disabled>
+                    <span id="timeDisplay">0:00</span>
+                </div>
+                
+                <div style="margin-top: 15px; color: #95a5a6; font-size: 14px;">
+                    <strong>Tip:</strong> Only the host can control the video. Paste any YouTube URL above.
+                </div>
+            </div>
+            
+            <div class="chat-section">
+                <h3>Chats</h3>
+                <div class="chat-messages" id="chatMessages">
+                    <div class="message system">
+                        <div class="username">System</div>
+                        <div class="text">Welcome to the room! Chat will appear here.</div>
+                    </div>
+                </div>
+                
+                <div class="chat-input">
+                    <input type="text" id="messageInput" placeholder="Type your message...">
+                    <button id="sendBtn" disabled>Send</button>
+                </div>
+                
+                <div class="user-list">
+                    <h4>Users in Room</h4>
+                    <div id="usersList">
+                        <div class="user-item">Loading...</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- YouTube IFrame API -->
+    <script src="https://www.youtube.com/iframe_api"></script>
+    
+    <!-- Socket.io client -->
+    <script src="/socket.io/socket.io.js"></script>
+    
+    <script>
+        // Global variables
+        let player;
+        let isHost = false;
+        let isSyncing = false;
+        let currentVideoId = '';
+        
+        // Get URL parameters
+        const urlParams = new URLSearchParams(window.location.search);
+        const roomId = urlParams.get('room');
+        const username = decodeURIComponent(urlParams.get('user') || 'Guest');
+        
+        // Update UI
+        document.getElementById('roomCode').textContent = roomId || 'ERROR';
+        
+        // Socket.io connection
+        const socket = io();
+        
+        // DOM Elements
+        const videoUrlInput = document.getElementById('videoUrl');
+        const loadVideoBtn = document.getElementById('loadVideoBtn');
+        const playBtn = document.getElementById('playBtn');
+        const pauseBtn = document.getElementById('pauseBtn');
+        const seekBar = document.getElementById('seekBar');
+        const timeDisplay = document.getElementById('timeDisplay');
+        const messageInput = document.getElementById('messageInput');
+        const sendBtn = document.getElementById('sendBtn');
+        const chatMessages = document.getElementById('chatMessages');
+        const usersList = document.getElementById('usersList');
+        const leaveBtn = document.getElementById('leaveBtn');
+        const videoStatus = document.getElementById('videoStatus');
+        const videoTitle = document.getElementById('videoTitle');
+        
+        // Initialize YouTube Player
+        function onYouTubeIframeAPIReady() {
+            player = new YT.Player('player', {
+                height: '480',
+                width: '100%',
+                playerVars: {
+                    'playsinline': 1,
+                    'controls': 0, // Hide YouTube controls since we're building our own
+                    'modestbranding': 1,
+                    'rel': 0
+                },
+                events: {
+                    'onReady': onPlayerReady,
+                    'onStateChange': onPlayerStateChange,
+                    'onError': onPlayerError
+                }
+            });
+        }
+        
+        function onPlayerReady(event) {
+            console.log('✅ YouTube player ready');
+            videoStatus.textContent = 'Player ready. Paste a YouTube URL above.';
+            
+            // Set up periodic time update
+            setInterval(updateTimeDisplay, 1000);
+        }
+        
+        function onPlayerStateChange(event) {
+            // If we're syncing (receiving updates from server), don't emit events
+            if (isSyncing) return;
+            
+            const currentTime = player.getCurrentTime();
+            
+            switch(event.data) {
+                case YT.PlayerState.PLAYING:
+                    if (isHost) {
+                        console.log('▶️ Emitting play event at', currentTime);
+                        socket.emit('video-play', { roomId, currentTime });
+                        videoStatus.textContent = 'Playing';
+                    }
+                    break;
+                    
+                case YT.PlayerState.PAUSED:
+                    if (isHost) {
+                        console.log('⏸️ Emitting pause event at', currentTime);
+                        socket.emit('video-pause', { roomId, currentTime });
+                        videoStatus.textContent = 'Paused';
+                    }
+                    break;
+                    
+                case YT.PlayerState.ENDED:
+                    if (isHost) {
+                        socket.emit('video-pause', { roomId, currentTime: 0 });
+                        videoStatus.textContent = 'Video ended';
+                    }
+                    break;
+                    
+                case YT.PlayerState.BUFFERING:
+                    videoStatus.textContent = 'Buffering...';
+                    break;
+            }
+        }
+        
+        function onPlayerError(event) {
+            console.error('YouTube player error:', event.data);
+            videoStatus.textContent = 'Error loading video. Please check the URL.';
+            addSystemMessage('Error loading video. Please check the URL.');
+        }
+        
+        function updateTimeDisplay() {
+            if (!player || !player.getCurrentTime) return;
+            
+            const currentTime = player.getCurrentTime();
+            const duration = player.getDuration();
+            
+            if (duration > 0) {
+                const percentage = (currentTime / duration) * 100;
+                seekBar.value = percentage;
+                timeDisplay.textContent = formatTime(currentTime) + ' / ' + formatTime(duration);
+            }
+        }
+        
+        // Extract YouTube Video ID from URL
+        function extractYouTubeId(url) {
+            if (!url) return null;
+            
+            // Handle various YouTube URL formats
+            const patterns = [
+                /(?:youtube\.com\/watch\?v=|youtu\.be\/|youtube\.com\/embed\/)([a-zA-Z0-9_-]{11})/,
+                /^([a-zA-Z0-9_-]{11})$/
+            ];
+            
+            for (const pattern of patterns) {
+                const match = url.match(pattern);
+                if (match && match[1]) {
+                    return match[1];
+                }
+            }
+            
+            return null;
+        }
+        
+        // Load video by URL
+        function loadVideo(url) {
+            const videoId = extractYouTubeId(url);
+            
+            if (!videoId) {
+                alert('Invalid YouTube URL. Please enter a valid YouTube video URL.');
+                return false;
+            }
+            
+            currentVideoId = videoId;
+            
+            if (player && player.loadVideoById) {
+                player.loadVideoById(videoId);
+                videoUrlInput.value = url;
+                videoStatus.textContent = 'Loading video...';
+                videoTitle.textContent = 'Loading...';
+                
+                // Try to get video title (optional)
+                setTimeout(() => {
+                    if (player && player.getVideoData) {
+                        const videoData = player.getVideoData();
+                        if (videoData && videoData.title) {
+                            videoTitle.textContent = videoData.title;
+                        }
+                    }
+                }, 1000);
+                
+                return true;
+            }
+            
+            return false;
+        }
+        
+        // Socket event handlers
+        socket.on('connect', () => {
+            console.log('✅ Connected to server');
+            
+            // Join the room
+            socket.emit('join-room', { roomId, username });
+        });
+        
+        socket.on('room-state', (data) => {
+            console.log('Room state received:', data);
+            isHost = data.isHost;
+            
+            // Update UI
+            document.getElementById('userRole').textContent = isHost ? 'Host' : 'Viewer';
+            
+            // Enable/disable controls based on host status
+            const controls = [loadVideoBtn, playBtn, pauseBtn, seekBar, videoUrlInput];
+            controls.forEach(control => {
+                control.disabled = !isHost;
+                control.style.opacity = isHost ? 1 : 0.5;
+            });
+            
+            sendBtn.disabled = false;
+            
+            addSystemMessage(`You joined as ${isHost ? 'host' : 'viewer'}`);
+            
+            // Load existing video if any
+            if (data.videoUrl) {
+                videoUrlInput.value = data.videoUrl;
+                if (isHost) {
+                    loadVideo(data.videoUrl);
+                }
+                addSystemMessage(`Current video: ${data.videoUrl}`);
+            }
+        });
+        
+        socket.on('user-joined', (data) => {
+            addSystemMessage(`${data.username} joined the room`);
+        });
+        
+        socket.on('user-left', (data) => {
+            addSystemMessage(`${data.username} left the room`);
+            removeUser(data.userId);
+        });
+        
+        socket.on('user-list', (users) => {
+            updateUserList(users);
+        });
+        
+        socket.on('receive-message', (data) => {
+            addMessage(data.username, data.message);
+        });
+        
+        // Video control events from server
+        socket.on('video-play', (data) => {
+            console.log('▶️ Received play event at', data.currentTime);
+            addSystemMessage(`Host played video`);
+            
+            if (!isHost && player && player.playVideo) {
+                isSyncing = true;
+                
+                // Sync time if needed
+                const currentTime = player.getCurrentTime();
+                if (Math.abs(currentTime - data.currentTime) > 2) {
+                    player.seekTo(data.currentTime, true);
+                }
+                
+                player.playVideo();
+                
+                setTimeout(() => {
+                    isSyncing = false;
+                }, 100);
+                
+                videoStatus.textContent = 'Playing (synced)';
+            }
+        });
+        
+        socket.on('video-pause', (data) => {
+            console.log('⏸️ Received pause event at', data.currentTime);
+            addSystemMessage(`Host paused video`);
+            
+            if (!isHost && player && player.pauseVideo) {
+                isSyncing = true;
+                
+                // Sync time if needed
+                const currentTime = player.getCurrentTime();
+                if (Math.abs(currentTime - data.currentTime) > 2) {
+                    player.seekTo(data.currentTime, true);
+                }
+                
+                player.pauseVideo();
+                
+                setTimeout(() => {
+                    isSyncing = false;
+                }, 100);
+                
+                videoStatus.textContent = 'Paused (synced)';
+            }
+        });
+        
+        socket.on('video-seek', (data) => {
+            console.log('🔍 Received seek event to', data.currentTime);
+            addSystemMessage(`Host seeked to ${formatTime(data.currentTime)}`);
+            
+            if (!isHost && player && player.seekTo) {
+                isSyncing = true;
+                player.seekTo(data.currentTime, true);
+                
+                setTimeout(() => {
+                    isSyncing = false;
+                }, 100);
+            }
+        });
+        
+        socket.on('video-change', (data) => {
+            console.log('🎬 Received video change:', data.videoUrl);
+            videoUrlInput.value = data.videoUrl;
+            addSystemMessage(`Host changed video`);
+            
+            // Everyone loads the new video
+            if (loadVideo(data.videoUrl)) {
+                videoStatus.textContent = 'Video changed by host';
+            }
+        });
+        
+        socket.on('new-host', (data) => {
+            isHost = true;
+            document.getElementById('userRole').textContent = 'Host';
+            addSystemMessage(`You are now the host!`);
+            
+            // Enable controls
+            const controls = [loadVideoBtn, playBtn, pauseBtn, seekBar, videoUrlInput];
+            controls.forEach(control => {
+                control.disabled = false;
+                control.style.opacity = 1;
+            });
+        });
+        
+        socket.on('error', (data) => {
+            addSystemMessage(`Error: ${data.message}`);
+        });
+        
+        socket.on('disconnect', () => {
+            addSystemMessage('Disconnected from server');
+        });
+        
+        // UI Event handlers
+        loadVideoBtn.addEventListener('click', () => {
+            const videoUrl = videoUrlInput.value.trim();
+            if (videoUrl && isHost) {
+                if (loadVideo(videoUrl)) {
+                    socket.emit('video-change', { roomId, videoUrl });
+                }
+            }
+        });
+        
+        // Auto-load when Enter is pressed in URL input
+        videoUrlInput.addEventListener('keypress', (e) => {
+            if (e.key === 'Enter' && isHost) {
+                loadVideoBtn.click();
+            }
+        });
+        
+        playBtn.addEventListener('click', () => {
+            if (isHost && player && player.playVideo) {
+                const currentTime = player.getCurrentTime();
+                socket.emit('video-play', { roomId, currentTime });
+                player.playVideo();
+                videoStatus.textContent = 'Playing';
+            }
+        });
+        
+        pauseBtn.addEventListener('click', () => {
+            if (isHost && player && player.pauseVideo) {
+                const currentTime = player.getCurrentTime();
+                socket.emit('video-pause', { roomId, currentTime });
+                player.pauseVideo();
+                videoStatus.textContent = 'Paused';
+            }
+        });
+        
+        seekBar.addEventListener('input', (e) => {
+            const percentage = parseFloat(e.target.value) || 0;
+            if (player && player.getDuration) {
+                const duration = player.getDuration();
+                if (duration > 0) {
+                    const currentTime = (percentage / 100) * duration;
+                    timeDisplay.textContent = formatTime(currentTime) + ' / ' + formatTime(duration);
+                }
+            }
+        });
+        
+        seekBar.addEventListener('change', (e) => {
+            if (isHost && player && player.seekTo) {
+                const percentage = parseFloat(e.target.value) || 0;
+                const duration = player.getDuration();
+                if (duration > 0) {
+                    const currentTime = (percentage / 100) * duration;
+                    socket.emit('video-seek', { roomId, currentTime });
+                    player.seekTo(currentTime, true);
+                }
+            }
+        });
+        
+        sendBtn.addEventListener('click', () => {
+            sendMessage();
+        });
+        
+        messageInput.addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') {
+                sendMessage();
+            }
+        });
+        
+        leaveBtn.addEventListener('click', () => {
+            if (confirm('Leave this binge baithak?')) {
+                window.location.href = 'index.html';
+            }
+        });
+        
+        // Helper functions
+        function sendMessage() {
+            const message = messageInput.value.trim();
+            if (message) {
+                socket.emit('send-message', { roomId, username, message });
+                messageInput.value = '';
+            }
+        }
+        
+        function addMessage(sender, text) {
+            const messageDiv = document.createElement('div');
+            messageDiv.className = 'message';
+            messageDiv.innerHTML = `
+                <div class="username">${sender}</div>
+                <div class="text">${text}</div>
+                <div style="font-size: 12px; color: #95a5a6; margin-top: 3px;">
+                    ${new Date().toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'})}
+                </div>
+            `;
+            chatMessages.appendChild(messageDiv);
+            chatMessages.scrollTop = chatMessages.scrollHeight;
+        }
+        
+        function addSystemMessage(text) {
+            const messageDiv = document.createElement('div');
+            messageDiv.className = 'message system';
+            messageDiv.innerHTML = `
+                <div class="username">System</div>
+                <div class="text">${text}</div>
+                <div style="font-size: 12px; color: #95a5a6; margin-top: 3px;">
+                    ${new Date().toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'})}
+                </div>
+            `;
+            chatMessages.appendChild(messageDiv);
+            chatMessages.scrollTop = chatMessages.scrollHeight;
+        }
+        
+        function updateUserList(users) {
+            usersList.innerHTML = '';
+            users.forEach(user => {
+                const userDiv = document.createElement('div');
+                userDiv.className = `user-item ${user.isHost ? 'host' : ''}`;
+                userDiv.id = `user-${user.userId}`;
+                userDiv.textContent = user.isHost ? `👑 ${user.username}` : user.username;
+                if (user.userId === socket.id) {
+                    userDiv.textContent += ' (You)';
+                }
+                usersList.appendChild(userDiv);
+            });
+        }
+        
+        function removeUser(userId) {
+            const userElement = document.getElementById(`user-${userId}`);
+            if (userElement) {
+                userElement.remove();
+            }
+        }
+        
+        function formatTime(seconds) {
+            if (!seconds && seconds !== 0) return '0:00';
+            
+            const mins = Math.floor(seconds / 60);
+            const secs = Math.floor(seconds % 60);
+            return `${mins}:${secs.toString().padStart(2, '0')}`;
+        }
+        
+        // Initialize time display
+        timeDisplay.textContent = '0:00 / 0:00';
+        
+        // Add welcome message
+        setTimeout(() => {
+            addSystemMessage('Welcome to Binge Baithak!');
+            addSystemMessage('Host can paste YouTube URLs to load videos.');
+        }, 1000);
+        
+        // Test URLs for quick testing
+        setTimeout(() => {
+            if (isHost) {
+                videoUrlInput.placeholder = "Try: https://youtube.com/watch?v=dQw4w9WgXcQ";
+            }
+        }, 2000);
+    </script>
+</body>
+</html>
