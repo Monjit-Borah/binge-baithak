@@ -127,14 +127,14 @@ cd BINGE_BAITHAK
    - **Mac:** `brew services start mongodb-community`
    - **Linux:** `sudo systemctl start mongod`
 
-2. Your MongoDB URI will be: `mongodb://localhost:27017/binge_baithak`
+2. Your MongoDB URI will be: `MONGODB_URI=your_mongodb_uri_here`
 
 **Option B: Using MongoDB Atlas (Cloud)**
 
 1. Go to [MongoDB Atlas](https://www.mongodb.com/cloud/atlas/register)
 2. Create a free account and set up a cluster
 3. Click "Connect" → "Connect your application"
-4. Copy the connection string (format: `mongodb+srv://username:password@cluster.mongodb.net/`)
+4. Copy the connection string (format: `MONGODB_URI=your_mongodb_uri_here`)
 5. Replace `<password>` with your database password
 
 ### Step 3: Configure Environment Variables
