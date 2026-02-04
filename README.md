@@ -157,7 +157,7 @@ cd BINGE_BAITHAK
 
    ```env
    PORT=3000
-   MONGODB_URI=mongodb://localhost:27017/binge_baithak
+   MONGODB_URI=MONGODB_URI=your_mongodb_uri_here
    NODE_ENV=development
    ```
 
