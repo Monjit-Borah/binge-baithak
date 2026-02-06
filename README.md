@@ -8,7 +8,7 @@ Watch movies with friends from different places in real-time! Create a room, sha
 
 ## Live Demo
  
-• **Demo Video:** Coming soon!
+• **Demo Video:** https://youtu.be/bbeLgLqbshM?si=ZLqG0-sP3GV6WpGi
 
 ---
 
